@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon Multi Screen YouTube By Satya</title>
+
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(circle at top, #0f2027, #000);
+    font-family: 'Segoe UI', sans-serif;
+    color: #0ff;
+    text-align: center;
+    padding: 20px;
+  }
+
+  h1 {
+    text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+  }
+
+  .panel {
+    max-width: 420px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 20px #0ff;
+  }
+
+  input, button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+  }
+
+  input {
+    background: #000;
+    color: #0ff;
+    box-shadow: inset 0 0 10px #0ff;
+  }
+
+  button {
+    background: #0ff;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 15px #0ff;
+  }
+
+  button:hover {
+    background: #00cccc;
+  }
+
+  #screens {
+    margin-top: 25px;
+    display: grid;
+    gap: 12px;
+  }
+
+  iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #0ff;
+  }
+
+  footer {
+    margin-top: 25px;
+    font-size: 14px;
+    opacity: 0.7;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>⚡ Neon YouTube Multi-Screen By <i>SATYA</i>⚡</h1>
+
+<div class="panel">
+  <input id="link" placeholder="Paste YouTube link">
+  <input id="count" type="number" min="1" placeholder="Number of screens">
+  <button onclick="play()">PLAY</button>
+</div>
+
+<div id="screens"></div>
+
+<footer>Tap PLAY to start • Autoplay muted by browser</footer>
+
+<script>
+function play() {
+  const link = document.getElementById("link").value.trim();
+  const count = parseInt(document.getElementById("count").value);
+  const screens = document.getElementById("screens");
+
+  if (!link || !count) {
+    alert("Enter YouTube link & screen count");
+    return;
+  }
+
+  let id = "";
+  if (link.includes("v=")) {
+    id = link.split("v=")[1].split("&")[0];
+  } else if (link.includes("youtu.be/")) {
+    id = link.split("youtu.be/")[1];
+  } else {
+    alert("Invalid YouTube link");
+    return;
+  }
+
+  screens.innerHTML = "";
+  const cols = Math.ceil(Math.sqrt(count));
+  screens.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+
+  for (let i = 0; i < count; i++) {
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&mute=1`;
+    iframe.allow = "autoplay";
+    screens.appendChild(iframe);
+  }
+}
+</script>
+
+</body>
+</html>
